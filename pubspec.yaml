@@ -1,7 +1,9 @@
 name: sms_retriever_plus
 description: "A Flutter plugin for Android SMS Retriever API. Automatically reads OTP/SMS messages using the SMS Retriever API."
 version: 1.0.0
-homepage: https://github.com/yourusername/sms_retriever_plus
+homepage: https://github.com/edris-mazhari/sms_retriever_plus
+repository: https://github.com/edris-mazhari/sms_retriever_plus
+issue_tracker: https://github.com/edris-mazhari/sms_retriever_plus/issues
 
 environment:
   sdk: ^3.10.8
