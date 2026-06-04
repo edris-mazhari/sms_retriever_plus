@@ -57,7 +57,8 @@ class SmsRetrieverPlus {
   /// Start the SMS Retriever listener.
   ///
   /// Returns `true` when the listener is active. The listener times out
-  /// after 5 minutes; the BroadcastReceiver automatically restarts it.
+  /// after 5 minutes; the BroadcastReceiver automatically restarts it
+  /// until [stopSMSAPI] is called.
   ///
   /// Requirements:
   /// - Sender must NOT be in contacts
@@ -65,5 +66,13 @@ class SmsRetrieverPlus {
   /// - Message must end with the 11-char app hash
   static Future<bool?> initSMSAPI() async {
     return await _channel.invokeMethod<bool?>('initSMSAPI');
+  }
+
+  /// Stop the SMS Retriever listener.
+  ///
+  /// The current listener will stop on its next timeout or SMS receipt.
+  /// Call [initSMSAPI] to start listening again.
+  static Future<bool?> stopSMSAPI() async {
+    return await _channel.invokeMethod<bool?>('stopSMSAPI');
   }
 }

@@ -20,7 +20,9 @@ class SmsRetrieverBroadcastReceiver : BroadcastReceiver() {
                     if (message != null) {
                         Log.i("SmsRetriever", "SMS received: $message")
                         SmsRetrieverPlusPlugin.sendSmsToFlutter(message)
+                    }
 
+                    if (SmsRetrieverPlusPlugin.isListening) {
                         val client = SmsRetriever.getClient(context)
                         client.startSmsRetriever()
                             .addOnSuccessListener {
@@ -32,15 +34,17 @@ class SmsRetrieverBroadcastReceiver : BroadcastReceiver() {
                     }
                 }
                 CommonStatusCodes.TIMEOUT -> {
-                    Log.e("SmsRetriever", "SMS retrieval timed out. Restarting listener...")
-                    val client = SmsRetriever.getClient(context)
-                    client.startSmsRetriever()
-                        .addOnSuccessListener {
-                            Log.i("SmsRetriever", "Listener restarted successfully.")
-                        }
-                        .addOnFailureListener { e ->
-                            Log.e("SmsRetriever", "Failed to restart listener after timeout", e)
-                        }
+                    if (SmsRetrieverPlusPlugin.isListening) {
+                        Log.i("SmsRetriever", "SMS retrieval timed out. Restarting listener...")
+                        val client = SmsRetriever.getClient(context)
+                        client.startSmsRetriever()
+                            .addOnSuccessListener {
+                                Log.i("SmsRetriever", "Listener restarted successfully.")
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e("SmsRetriever", "Failed to restart listener after timeout", e)
+                            }
+                    }
                 }
             }
         }

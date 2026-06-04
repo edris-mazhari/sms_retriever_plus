@@ -16,6 +16,7 @@ class SmsRetrieverPlusPlugin :
     companion object {
         private var channel: MethodChannel? = null
         private var applicationContext: Context? = null
+        @JvmField var isListening = false
 
         fun sendSmsToFlutter(smsMessage: String) {
             channel?.invokeMethod("onSmsReceived", smsMessage)
@@ -45,6 +46,7 @@ class SmsRetrieverPlusPlugin :
                 }
             }
             "initSMSAPI" -> {
+                isListening = true
                 val context = applicationContext
                 if (context != null) {
                     val client = SmsRetriever.getClient(context)
@@ -60,6 +62,11 @@ class SmsRetrieverPlusPlugin :
                 } else {
                     result.success(false)
                 }
+            }
+            "stopSMSAPI" -> {
+                isListening = false
+                Log.i("SmsRetriever", "Listener stopped")
+                result.success(true)
             }
             else -> result.notImplemented()
         }

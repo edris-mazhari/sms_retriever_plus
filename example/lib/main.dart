@@ -25,38 +25,50 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _initSmsRetriever() async {
-    try {
-      SmsRetrieverPlus.initialize();
-      SmsRetrieverPlus.onSmsReceivedCallback = (message) {
-        setState(() {
-          _messages.insert(0, message);
-          _status = 'SMS received!';
-        });
-      };
+    SmsRetrieverPlus.initialize();
+    SmsRetrieverPlus.onSmsReceivedCallback = (message) {
+      setState(() {
+        _messages.insert(0, message);
+        _status = 'SMS received!';
+      });
+    };
 
-      final hash = await SmsRetrieverPlus.getSignature();
-      setState(() {
-        _appHash = hash ?? 'No hash';
-        _status = 'Hash loaded, starting listener...';
-      });
+    final hash = await SmsRetrieverPlus.getSignature();
+    setState(() => _appHash = hash ?? 'No hash');
+    await _start();
+  }
 
-      await SmsRetrieverPlus.initSMSAPI();
-      setState(() {
-        _listening = true;
-        _status = 'Listening - send SMS ending with $_appHash';
-      });
-    } catch (e) {
-      setState(() {
-        _status = 'Error: $e';
-      });
-    }
+  Future<void> _start() async {
+    final ok = await SmsRetrieverPlus.initSMSAPI();
+    setState(() {
+      _listening = ok ?? false;
+      _status = ok == true
+          ? 'Listening - send SMS ending with $_appHash'
+          : 'Failed to start';
+    });
+  }
+
+  Future<void> _stop() async {
+    await SmsRetrieverPlus.stopSMSAPI();
+    setState(() {
+      _listening = false;
+      _status = 'Stopped';
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: const Text('SMS Retriever Example')),
+        appBar: AppBar(
+          title: const Text('SMS Retriever Example'),
+          actions: [
+            IconButton(
+              icon: Icon(_listening ? Icons.stop : Icons.play_arrow),
+              onPressed: _listening ? _stop : _start,
+            ),
+          ],
+        ),
         body: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(

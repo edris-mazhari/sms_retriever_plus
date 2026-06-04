@@ -21,6 +21,9 @@ void main() {
       if (methodCall.method == 'initSMSAPI') {
         return true;
       }
+      if (methodCall.method == 'stopSMSAPI') {
+        return true;
+      }
       return null;
     });
   });
@@ -37,6 +40,12 @@ void main() {
   });
 
   test('initSMSAPI returns true', () async {
+    final result = await SmsRetrieverPlus.initSMSAPI();
+    expect(result, true);
+  });
+
+  test('initSMSAPI returns true after stop', () async {
+    await SmsRetrieverPlus.stopSMSAPI();
     final result = await SmsRetrieverPlus.initSMSAPI();
     expect(result, true);
   });

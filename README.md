@@ -89,6 +89,7 @@ Your app will receive `"Your verification code is 123456 <11-char-hash>"` via th
 | `initialize()` | `void` | Register the platform channel handler (call once) |
 | `getSignature()` | `Future<String?>` | Get the 11-char app signature hash |
 | `initSMSAPI()` | `Future<bool?>` | Start the SMS Retriever listener |
+| `stopSMSAPI()` | `Future<bool?>` | Stop the listener (prevents auto-restart) |
 | `onSmsReceivedCallback` | setter | Callback `void Function(String)` for received SMS |
 
 ---

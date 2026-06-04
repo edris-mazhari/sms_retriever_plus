@@ -1,3 +1,8 @@
+# 1.1.0
+
+- Added `stopSMSAPI()` to stop the listener
+- Auto-restart respects stop flag (BroadcastReceiver checks `isListening`)
+
 # 1.0.0
 
 - Initial release
