@@ -16,7 +16,7 @@ class SmsRetrieverPlusPlugin :
     companion object {
         private var channel: MethodChannel? = null
         private var applicationContext: Context? = null
-        @JvmField var isListening = false
+        @Volatile @JvmField var isListening = false
 
         fun sendSmsToFlutter(smsMessage: String) {
             channel?.invokeMethod("onSmsReceived", smsMessage)
