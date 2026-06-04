@@ -18,6 +18,7 @@ A **Flutter plugin** for the **Android SMS Retriever API** — automatically int
 - ✅ Start / auto-restart the SMS listener
 - ✅ Receive messages via a simple callback
 - ✅ Manifest-declared `BroadcastReceiver` — auto-merged into your app
+- ✅ Thread-safe listener state management
 - ✅ Minimal setup — just add the dependency
 
 ---

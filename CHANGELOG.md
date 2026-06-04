@@ -1,3 +1,8 @@
+# 1.1.1
+
+- Fixed: Add `@Volatile` annotation to `isListening` flag for thread-safe access
+- Improved: Enhanced thread safety when stopping the SMS listener
+
 # 1.1.0
 
 - Added `stopSMSAPI()` to stop the listener
