@@ -43,9 +43,7 @@ The Android SMS Retriever API can read a single SMS message that **ends with you
 
 ```yaml
 dependencies:
-  sms_retriever_plus:
-    git:
-      url: https://github.com/yourusername/sms_retriever_plus.git
+  sms_retriever_plus: ^1.0.0
 ```
 
 ### 2. Use it
